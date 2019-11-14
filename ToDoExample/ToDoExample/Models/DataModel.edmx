@@ -1,0 +1,289 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ToDoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="aspnet_Users">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="ApplicationId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="LoweredUserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="MobileAlias" Type="nvarchar" MaxLength="16" />
+          <Property Name="IsAnonymous" Type="bit" Nullable="false" />
+          <Property Name="LastActivityDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ITEM">
+          <Key>
+            <PropertyRef Name="Item_ID" />
+          </Key>
+          <Property Name="Item_ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Item_Description" Type="varchar(max)" Nullable="false" />
+          <Property Name="Item_Status" Type="tinyint" Nullable="false" />
+          <Property Name="To_Do_ID" Type="bigint" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TO_DO">
+          <Key>
+            <PropertyRef Name="To_Do_ID" />
+          </Key>
+          <Property Name="To_Do_ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="varchar(max)" Nullable="false" />
+          <Property Name="Deadline" Type="datetime" Nullable="false" />
+          <Property Name="Status" Type="tinyint" Nullable="false" />
+          <Property Name="UserID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_ITEM_TO_DO">
+          <End Role="TO_DO" Type="Self.TO_DO" Multiplicity="1" />
+          <End Role="ITEM" Type="Self.ITEM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TO_DO">
+              <PropertyRef Name="To_Do_ID" />
+            </Principal>
+            <Dependent Role="ITEM">
+              <PropertyRef Name="To_Do_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TO_DO_aspnet_Users">
+          <End Role="aspnet_Users" Type="Self.aspnet_Users" Multiplicity="1" />
+          <End Role="TO_DO" Type="Self.TO_DO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aspnet_Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="TO_DO">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="ADD_ITEM" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Description" Type="varchar(max)" Mode="In" />
+          <Parameter Name="Status" Type="tinyint" Mode="In" />
+          <Parameter Name="ToDoID" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="ADD_TO_DO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Name" Type="varchar" Mode="In" />
+          <Parameter Name="Description" Type="varchar(max)" Mode="In" />
+          <Parameter Name="Deadline" Type="datetime" Mode="In" />
+          <Parameter Name="Status" Type="tinyint" Mode="In" />
+          <Parameter Name="UserId" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="DELETE_ITEM" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ItemID" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="DELETE_ITEM_TO_DO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ToDoID" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="DELETE_TO_DO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ToDoID" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="UPDATE_STATUS_ITEM" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ItemStatus" Type="tinyint" Mode="In" />
+          <Parameter Name="ItemID" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="UPDATE_TO_DO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ToDoID" Type="bigint" Mode="In" />
+          <Parameter Name="Status" Type="tinyint" Mode="In" />
+        </Function>
+        <EntityContainer Name="ToDoModelStoreContainer">
+          <EntitySet Name="aspnet_Users" EntityType="Self.aspnet_Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ITEM" EntityType="Self.ITEM" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TO_DO" EntityType="Self.TO_DO" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ITEM_TO_DO" Association="Self.FK_ITEM_TO_DO">
+            <End Role="TO_DO" EntitySet="TO_DO" />
+            <End Role="ITEM" EntitySet="ITEM" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TO_DO_aspnet_Users" Association="Self.FK_TO_DO_aspnet_Users">
+            <End Role="aspnet_Users" EntitySet="aspnet_Users" />
+            <End Role="TO_DO" EntitySet="TO_DO" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ToDoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="ToDoEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="aspnet_Users" EntityType="ToDoModel.aspnet_Users" />
+          <FunctionImport Name="UPDATE_STATUS_ITEM">
+            <Parameter Name="ItemStatus" Mode="In" Type="Byte" />
+            <Parameter Name="ItemID" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="UPDATE_TO_DO">
+            <Parameter Name="ToDoID" Mode="In" Type="Int64" />
+            <Parameter Name="Status" Mode="In" Type="Byte" />
+          </FunctionImport>
+          <FunctionImport Name="DELETE_ITEM">
+          <Parameter Name="ItemID" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="DELETE_TO_DO">
+          <Parameter Name="ToDoID" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="DELETE_ITEM_TO_DO">
+          <Parameter Name="ToDoID" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <EntitySet Name="ITEMs" EntityType="ToDoModel.ITEM" />
+          <EntitySet Name="TO_DO" EntityType="ToDoModel.TO_DO" />
+          <AssociationSet Name="FK_TO_DO_aspnet_Users" Association="ToDoModel.FK_TO_DO_aspnet_Users">
+            <End Role="aspnet_Users" EntitySet="aspnet_Users" />
+            <End Role="TO_DO" EntitySet="TO_DO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ITEM_TO_DO" Association="ToDoModel.FK_ITEM_TO_DO">
+            <End Role="TO_DO" EntitySet="TO_DO" />
+            <End Role="ITEM" EntitySet="ITEMs" />
+          </AssociationSet>
+          <FunctionImport Name="ADD_ITEM">
+            <Parameter Name="Description" Mode="In" Type="String" />
+            <Parameter Name="Status" Mode="In" Type="Byte" />
+            <Parameter Name="ToDoID" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="ADD_TO_DO">
+            <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="Description" Mode="In" Type="String" />
+            <Parameter Name="Deadline" Mode="In" Type="DateTime" />
+            <Parameter Name="Status" Mode="In" Type="Byte" />
+            <Parameter Name="UserId" Mode="In" Type="Guid" />
+          </FunctionImport>
+        </EntityContainer>
+        <EntityType Name="aspnet_Users">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="ApplicationId" Type="Guid" Nullable="false" />
+          <Property Name="UserId" Type="Guid" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="LoweredUserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="MobileAlias" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+          <Property Name="IsAnonymous" Type="Boolean" Nullable="false" />
+          <Property Name="LastActivityDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="TO_DO" Relationship="ToDoModel.FK_TO_DO_aspnet_Users" FromRole="aspnet_Users" ToRole="TO_DO" />
+        </EntityType>
+        <EntityType Name="ITEM">
+          <Key>
+            <PropertyRef Name="Item_ID" />
+          </Key>
+          <Property Name="Item_ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Item_Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Item_Status" Type="Byte" Nullable="false" />
+          <Property Name="To_Do_ID" Type="Int64" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="TO_DO" Relationship="ToDoModel.FK_ITEM_TO_DO" FromRole="ITEM" ToRole="TO_DO" />
+        </EntityType>
+        <EntityType Name="TO_DO">
+          <Key>
+            <PropertyRef Name="To_Do_ID" />
+          </Key>
+          <Property Name="To_Do_ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Deadline" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Status" Type="Byte" Nullable="false" />
+          <Property Name="UserID" Type="Guid" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="aspnet_Users" Relationship="ToDoModel.FK_TO_DO_aspnet_Users" FromRole="TO_DO" ToRole="aspnet_Users" />
+          <NavigationProperty Name="ITEMs" Relationship="ToDoModel.FK_ITEM_TO_DO" FromRole="TO_DO" ToRole="ITEM" />
+        </EntityType>
+        <Association Name="FK_TO_DO_aspnet_Users">
+          <End Type="ToDoModel.aspnet_Users" Role="aspnet_Users" Multiplicity="1" />
+          <End Type="ToDoModel.TO_DO" Role="TO_DO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aspnet_Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="TO_DO">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ITEM_TO_DO">
+          <End Type="ToDoModel.TO_DO" Role="TO_DO" Multiplicity="1" />
+          <End Type="ToDoModel.ITEM" Role="ITEM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TO_DO">
+              <PropertyRef Name="To_Do_ID" />
+            </Principal>
+            <Dependent Role="ITEM">
+              <PropertyRef Name="To_Do_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ToDoModelStoreContainer" CdmEntityContainer="ToDoEntities">
+          <EntitySetMapping Name="aspnet_Users">
+            <EntityTypeMapping TypeName="ToDoModel.aspnet_Users">
+              <MappingFragment StoreEntitySet="aspnet_Users">
+                <ScalarProperty Name="LastActivityDate" ColumnName="LastActivityDate" />
+                <ScalarProperty Name="IsAnonymous" ColumnName="IsAnonymous" />
+                <ScalarProperty Name="MobileAlias" ColumnName="MobileAlias" />
+                <ScalarProperty Name="LoweredUserName" ColumnName="LoweredUserName" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="UPDATE_STATUS_ITEM" FunctionName="ToDoModel.Store.UPDATE_STATUS_ITEM" />
+          <FunctionImportMapping FunctionImportName="UPDATE_TO_DO" FunctionName="ToDoModel.Store.UPDATE_TO_DO" />
+          <FunctionImportMapping FunctionImportName="DELETE_ITEM" FunctionName="ToDoModel.Store.DELETE_ITEM" />
+          <FunctionImportMapping FunctionImportName="DELETE_TO_DO" FunctionName="ToDoModel.Store.DELETE_TO_DO" />
+          <FunctionImportMapping FunctionImportName="DELETE_ITEM_TO_DO" FunctionName="ToDoModel.Store.DELETE_ITEM_TO_DO" />
+          <EntitySetMapping Name="ITEMs">
+            <EntityTypeMapping TypeName="ToDoModel.ITEM">
+              <MappingFragment StoreEntitySet="ITEM">
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="To_Do_ID" ColumnName="To_Do_ID" />
+                <ScalarProperty Name="Item_Status" ColumnName="Item_Status" />
+                <ScalarProperty Name="Item_Description" ColumnName="Item_Description" />
+                <ScalarProperty Name="Item_ID" ColumnName="Item_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TO_DO">
+            <EntityTypeMapping TypeName="ToDoModel.TO_DO">
+              <MappingFragment StoreEntitySet="TO_DO">
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Deadline" ColumnName="Deadline" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="To_Do_ID" ColumnName="To_Do_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="ADD_ITEM" FunctionName="ToDoModel.Store.ADD_ITEM" />
+          <FunctionImportMapping FunctionImportName="ADD_TO_DO" FunctionName="ToDoModel.Store.ADD_TO_DO" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

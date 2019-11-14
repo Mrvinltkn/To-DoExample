@@ -1,0 +1,140 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+
+
+<head>
+    <title>To-Do List</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="To-Do List Example" />
+    <meta name="keywords" content="">
+    <meta name="author" content="Merve İnaltekin" />
+    <link rel="icon" href="" type="image/x-icon">
+
+    <!-- Google font-->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+    <!-- Required Fremwork -->
+    <link rel="stylesheet" type="text/css" href="~/files/bower_components/bootstrap/css/bootstrap.min.css">
+    <!-- waves.css -->
+    <link rel="stylesheet" href="~/files/assets/pages/waves/css/waves.min.css" type="text/css" media="all">
+    <!-- feather icon -->
+    <link rel="stylesheet" type="text/css" href="~/files/assets/icon/feather/css/feather.css">
+    <!-- themify-icons line icon -->
+    <link rel="stylesheet" type="text/css" href="~/files/assets/icon/themify-icons/themify-icons.css">
+    <!-- ico font -->
+    <link rel="stylesheet" type="text/css" href="~/files/assets/icon/icofont/css/icofont.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" type="text/css" href="~/files/assets/icon/font-awesome/css/font-awesome.min.css">
+    <!-- Switch component css -->
+    <link rel="stylesheet" type="text/css" href="~/files/bower_components/switchery/css/switchery.min.css">
+    <!-- Style.css -->
+    <link rel="stylesheet" type="text/css" href="~/files/assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="~/files/assets/css/pages.css">
+    <!-- Data Table Css -->
+    <link rel="stylesheet" type="text/css" href="~/files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="~/files/assets/pages/data-table/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="~/files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
+
+</head>
+
+<body>
+
+    <div class="loader-bg">
+        <div class="loader-bar"></div>
+    </div>
+    <!-- [ Pre-loader ] end -->
+    <div id="pcoded" class="pcoded">
+        <div class="pcoded-overlay-box"></div>
+        <div class="pcoded-container navbar-wrapper">
+            <!-- [ Header ] start -->
+            <nav class="navbar header-navbar pcoded-header">
+                <div class="navbar-wrapper">
+                    <div class="navbar-logo">
+                        <a href="/Home/ToDoList">
+                            <img class="img-fluid" src="../files/assets/images/logOo.png" alt="Theme-Logo" />
+                        </a>
+                    </div>
+                    <div class="navbar-container container-fluid">
+                        <ul class="nav-right">
+                            <ul class="nav-left">
+                                <li>
+                                    <a href="#!" onclick="javascript:toggleFullScreen()" class="waves-effect waves-light">
+                                        <i class="full-screen feather icon-maximize"></i>
+                                    </a>
+                                </li>
+                                <li class="header-search">
+                                    <div class="main-search morphsearch-search">
+                                        <div class="input-group">
+                                            <span class="input-group-append">
+                                                <a href="/Login/Logout"><i class="feather icon-log-out input-group-text"></i></a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div class="proced-main-container">
+                <div class="proced-wrapper">
+                    <div class="pcoded-content" style="padding-top:50px;">
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Required Jquery -->
+    <script type="text/javascript" src="~/files/bower_components/jquery/js/jquery.min.js"></script>
+    <script type="text/javascript" src="~/files/bower_components/jquery-ui/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="~/files/bower_components/popper.js/js/popper.min.js"></script>
+    <script type="text/javascript" src="~/files/bower_components/bootstrap/js/bootstrap.min.js"></script>
+    <!-- waves js -->
+    <script src="~/files/assets/pages/waves/js/waves.min.js"></script>
+    <!-- modernizr js -->
+    <script type="text/javascript" src="~/files/bower_components/modernizr/js/modernizr.js"></script>
+    <script type="text/javascript" src="~/files/bower_components/modernizr/js/css-scrollbars.js"></script>
+    <!-- jquery slimscroll js -->
+    <script type="text/javascript" src="~/files/bower_components/jquery-slimscroll/js/jquery.slimscroll.js"></script>
+    <!-- Todo js -->
+    <script type="text/javascript" src="~/files/assets/pages/todo/todo.js"></script>
+    <script src="~/files/assets/js/pcoded.min.js"></script>
+    <script src="~/files/assets/js/vertical/vertical-layout.min.js"></script>
+    <script src="~/files/assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
+    <!-- Switch component js -->
+    <script type="text/javascript" src="~/files/bower_components/switchery/js/switchery.min.js"></script>
+    <!-- Tags js -->
+    <script type="text/javascript" src="~/files/bower_components/bootstrap-tagsinput/js/bootstrap-tagsinput.js"></script>
+    <script src="../../../cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.10.4/typeahead.bundle.min.js"></script>
+    <!-- Max-length js -->
+    <script type="text/javascript" src="~/files/bower_components/bootstrap-maxlength/js/bootstrap-maxlength.js"></script>
+    <!-- Custom js -->
+    <script src="~/files/assets/pages/data-table/js/data-table-custom.js"></script>
+    <script type="text/javascript" src="~/files/assets/js/script.js"></script>
+    <script type="text/javascript" src="~/files/assets/pages/advance-elements/swithces.js"></script>
+    <script src="~/files/assets/js/pcoded.min.js"></script>
+    <script src="~/files/assets/js/vertical/horizontal-layout.min.js"></script>
+    <script src="~/files/assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
+    <!-- i18next.min.js -->
+    <script type="text/javascript" src="~/files/bower_components/i18next/js/i18next.min.js"></script>
+    <script type="text/javascript" src="~/files/bower_components/i18next-xhr-backend/js/i18nextXHRBackend.min.js"></script>
+    <script type="text/javascript" src="~/files/bower_components/i18next-browser-languagedetector/js/i18nextBrowserLanguageDetector.min.js"></script>
+    <script type="text/javascript" src="~/files/bower_components/jquery-i18next/js/jquery-i18next.min.js"></script>
+    <script type="text/javascript" src="~/files/assets/js/common-pages.js"></script>
+    <!-- data-table js -->
+    <script src="~/files/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/files/assets/pages/data-table/js/jszip.min.js"></script>
+    <script src="~/files/assets/pages/data-table/js/pdfmake.min.js"></script>
+    <script src="~/files/assets/pages/data-table/js/vfs_fonts.js"></script>
+    <script src="~/files/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="~/files/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,185 @@
+﻿
+@{
+    ViewBag.Title = "ToDoList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model IQueryable<ToDoExample.Models.TO_DO>
+<div class="pcoded-content">
+    <!-- [ breadcrumb ] end -->
+    <div class="pcoded-inner-content">
+        <div class="main-body">
+            <div class="page-wrapper">
+                <div class="page-body">
+                    <!-- [ page content ] start -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="float-left">
+                                <h5>TO DO LIST</h5>
+                            </div>
+                            <div class="float-right">
+                                <a href="/Admin/CreateToDo" class="btn btn-primary waves-effect waves-light m-r-20"><i class="icofont icofont-plus"></i> New To-Do</a>
+                            </div>
+                        </div>
+                        <div class="card-block">
+                            <form method="post" action="/Admin/ToDoList" class="form-material">
+                                <div class="form-group row">
+                                    <div class="col-sm-6 m-b-5">
+                                        <label class="col-lable" style="color:#448aff;"><strong>Deadline: </strong></label>
+                                        <select name="DeadLine" class="form-control">
+                                            <option value="3"></option>
+                                            <option value="1">New To-Do</option>
+                                            <option value="0">Expried</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-6 m-b-5">
+                                        <label class="col-lable" style="color:#448aff;"><strong>Status: </strong></label>
+                                        <select name="Status" class="form-control">
+                                            <option value="null"></option>
+                                            <option value="1">Open</option>
+                                            <option value="0">Close</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-6 m-b-5">
+                                        <label class="col-lable" style="color:#448aff;"><strong>Name: </strong></label>
+                                        <input class="form-control" name="Name" type="text" id="Name" />
+                                    </div>
+                                    <div class="col-sm-6 m-b-5">
+                                        <label class="col-lable" style="color:#448aff;"><strong>User: </strong></label>
+                                        <select name="UserId" class="form-control">
+                                            <option value=""></option>
+                                            @foreach (var item in ViewData["User"] as List<ToDoExample.Models.aspnet_Users>)
+                                            {
+                                                <option value="@item.UserId">@item.UserName</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    </div>
+                                    <div class="form-group row"></div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-6">
+                                            <button class="btn btn-info btn-round waves-effect waves-light col-sm-12" type="submit">ARA</button>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <a class="btn btn-warning btn-round waves-effect waves-light col-sm-12" href="/Admin/ToDoList">TEMİZLE</a>
+                                        </div>
+                                    </div>
+</form>
+                        </div>
+                        <div class="card-block icon-btn">
+                            <div class="table-responsive dt-responsive">
+                                <table id="order-table" class="table table-striped table-bordered nowrap">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Description</th>
+                                            <th>Deadline</th>
+                                            <th>User</th>
+                                            <th>Create Date</th>
+                                            <th>Status</th>
+                                            <th>Add Item</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.ToList())
+                                        {
+                                            if (item.Status == 1)
+                                            {
+                                        <tr>
+                                            <td>@item.Name </td>
+                                            <td>@item.Description</td>
+                                            <td>@item.Deadline</td>
+                                            <td>@item.aspnet_Users.UserName</td>
+                                            <td>@item.CreateDate</td>
+                                            <td>
+                                                <div class="checkbox-fade fade-in-success">
+                                                    <label>
+                                                        <input type="checkbox" id="MyCheck @item.To_Do_ID" value="@item.Status" onclick="UpdateToDo(@item.To_Do_ID)">
+                                                        <span class="cr">
+                                                            <i class="cr-icon icofont icofont-ui-check txt-default"></i>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                            </td>
+                                            <td><a href="/Admin/Item?id=@item.To_Do_ID" class="btn waves-effect waves-dark btn-success btn-outline-success btn-icon"><i class="icofont icofont-plus"></i></a></td>
+                                            <td><a href="/Admin/DeleteToDo?id=@item.To_Do_ID" class="btn waves-effect waves-dark btn-success btn-outline-success btn-icon"><i class="icofont icofont-ui-delete"></i></a></td>
+                                        </tr>
+                                            }
+                                            else
+                                            {
+                                        <tr>
+                                            <td>@item.Name </td>
+                                            <td>@item.Description</td>
+                                            <td>@item.Deadline</td>
+                                            <td>@item.aspnet_Users.UserName</td>
+                                            <td>@item.CreateDate</td>
+                                            <td>
+                                                <div class="checkbox-fade fade-in-success">
+                                                    <label>
+                                                        <input type="checkbox" id="MyCheck @item.To_Do_ID" value="@item.Status" onclick="UpdateToDo(@item.To_Do_ID)" checked>
+                                                        <span class="cr">
+                                                            <i class="cr-icon icofont icofont-ui-check txt-default"></i>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                            </td>
+                                            <td><a href="/Admin/Item?id=@item.To_Do_ID" class="btn waves-effect waves-dark btn-success btn-outline-success btn-icon"><i class="icofont icofont-plus"></i></a></td>
+                                            <td><a href="/Admin/DeleteToDo?id=@item.To_Do_ID" class="btn waves-effect waves-dark btn-success btn-outline-success btn-icon"><i class="icofont icofont-ui-delete"></i></a></td>
+                                        </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Description</th>
+                                            <th>Deadline</th>
+                                            <th>User</th>
+                                            <th>Create Date</th>
+                                            <th>Status</th>
+                                            <th>Add Item</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- [ page content ] end -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function UpdateToDo(ID) {
+        var n = ID;
+        if (document.getElementById("MyCheck "+ID).checked == true) {
+            var postObj = JSON.stringify({
+                "To_Do_ID": n,
+                "Status": 0
+            });
+        }
+        else {
+            var postObj = JSON.stringify({
+                "To_Do_ID": n,
+                "Status": 1
+            });
+        }
+        $.ajax({
+            url:"/Admin/UpdateToDo", // endpoint
+            type: "POST",
+            data: postObj,
+            contentType: "application/json; charset=utf-8",
+            success: function (result) {
+                // success
+            },
+            error: function (errorData) { onError(errorData); }
+        });
+        setTimeout(function () {
+            location.reload(true);
+        }, 2000);
+    }
+</script>
+

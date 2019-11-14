@@ -1,0 +1,193 @@
+﻿@using ToDoExample.Models;
+@{
+    ViewBag.Title = "Item";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    long id = 0;
+}
+@model List<ToDoExample.Models.ITEM>
+<div class="pcoded-inner-content">
+    <div class="main-body">
+        <div class="page-wrapper">
+            <!-- Page-body start -->
+            <div class="page-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <!-- To Do List in Modal card start -->
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="float-left">
+                                    @foreach (TO_DO item in ViewData["ToDoInf"] as List<TO_DO>)
+                                    {
+                                        id = item.To_Do_ID;
+                                        <h5 id="tdoID">@item.To_Do_ID</h5> <h5>. @item.Name</h5>
+                                    }
+                                </div>
+                                <div class="float-right">
+                                    <a href="/Home/ToDoList" class="btn btn-success waves-effect waves-light m-r-20">Go Back</a>
+                                </div>
+                            </div>
+                            <div class="card-block">
+                                <section class="task-panel tasks-widget">
+                                    <div class="panel-body">
+                                        <div class="task-content">
+                                            @if (Model != null)
+                                            {
+                                                foreach (var item in Model)
+                                                {
+                                                    if (item.Item_Status == 0)
+                                                    {
+                                                        <div class="to-do-label">
+                                                            <div class="checkbox-fade fade-in-primary">
+                                                                <label class="check-task done-task">
+                                                                    <input type="checkbox" id="MyCheck @item.Item_ID" value="@item.Item_Status" onclick="UpdateItem(@item.Item_ID)" checked>
+                                                                    <span class="cr">
+                                                                        <i class="cr-icon icofont icofont-ui-check txt-primary"></i>
+                                                                    </span>
+                                                                    <span class="task-title-sp">@item.Item_Description</span>
+                                                                    <span class="float-right hidden-phone">
+                                                                        <i class="icofont icofont-ui-delete delete_todo" onclick="DeleteItem(@item.Item_ID)"></i>
+                                                                    </span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="to-do-label">
+                                                            <div class="checkbox-fade fade-in-primary">
+                                                                <label class="check-task">
+                                                                    <input type="checkbox" id="MyCheck @item.Item_ID" value="@item.Item_Status" onclick="UpdateItem(@item.Item_ID)">
+                                                                    <span class="cr">
+                                                                        <i class="cr-icon icofont icofont-ui-check txt-primary"></i>
+                                                                    </span>
+                                                                    <span class="task-title-sp">@item.Item_Description</span>
+                                                                    <span class="float-right hidden-phone">
+                                                                        <i class="icofont icofont-ui-delete delete_todo" onclick="DeleteItem(@item.Item_ID)"></i>
+                                                                    </span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    }
+
+                                                }
+                                            }
+                                        </div>
+                                        <div>
+                                            <a class="btn btn-primary btn-add-task waves-effect waves-light m-t-10" href="#" data-toggle="modal" data-target="#flipFlop"><i class="icofont icofont-plus"></i> Add New Tasks</a>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                        <!-- To Do List in Modal card end -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="flipFlop" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modalLabel">Add new todo</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-material">
+                            <div class="right-icon-control">
+                                <form class="form-material">
+                                    <div class="form-group form-primary">
+                                        <input type="text" id="Item_Description" name="Item_Description" class="form-control save_task_todo" required="">
+                                        <span class="form-bar"></span>
+                                        <label class="float-label">Create your task list</label>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="save_btn btn btn-primary" onclick="SaveItem()">Save</button>
+                <button type="button" class="btn btn-default close_btn" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function SaveItem() {
+        var n = document.getElementById("Item_Description").value;
+        var i = @id;
+        var postObj = JSON.stringify({
+            "Item_Description": n,
+            "To_Do_ID":i
+        });
+
+        $.ajax({
+            url:"/Home/SaveItem", // endpoint
+            type: "POST",
+            data: postObj,
+            contentType: "application/json; charset=utf-8",
+            success: function (result) {
+                // success
+            },
+            error: function (errorData) { onError(errorData); }
+        });
+    }
+</script>
+<script type="text/javascript">
+    function DeleteItem(ID) {
+        var n = ID;
+        var i = @id;
+        var postObj = JSON.stringify({
+            "Item_ID": n,
+            "To_Do_ID":i
+        });
+
+        $.ajax({
+            url:"/Home/DeleteItem", // endpoint
+            type: "POST",
+            data: postObj,
+            contentType: "application/json; charset=utf-8",
+            success: function (result) {
+                // success
+            },
+            error: function (errorData) { onError(errorData); }
+        });
+    }
+</script>
+<script type="text/javascript">
+    function UpdateItem(ID) {
+        var n = ID;
+        if (document.getElementById("MyCheck " + ID).checked == true) {
+            var postObj = JSON.stringify({
+                "Item_ID": n,
+                "Status": 0
+            });
+        } else {
+            var postObj = JSON.stringify({
+                "Item_ID": n,
+                "Status": 1
+            });
+        }
+        
+
+        $.ajax({
+            url:"/Home/UpdateItem", // endpoint
+            type: "POST",
+            data: postObj,
+            contentType: "application/json; charset=utf-8",
+            success: function (result) {
+                // success
+            },
+            error: function (errorData) { onError(errorData); }
+        });
+    }
+</script>

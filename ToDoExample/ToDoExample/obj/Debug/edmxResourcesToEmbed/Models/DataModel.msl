@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ToDoModelStoreContainer" CdmEntityContainer="ToDoEntities">
+    <EntitySetMapping Name="aspnet_Users">
+      <EntityTypeMapping TypeName="ToDoModel.aspnet_Users">
+        <MappingFragment StoreEntitySet="aspnet_Users">
+          <ScalarProperty Name="LastActivityDate" ColumnName="LastActivityDate" />
+          <ScalarProperty Name="IsAnonymous" ColumnName="IsAnonymous" />
+          <ScalarProperty Name="MobileAlias" ColumnName="MobileAlias" />
+          <ScalarProperty Name="LoweredUserName" ColumnName="LoweredUserName" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="UPDATE_STATUS_ITEM" FunctionName="ToDoModel.Store.UPDATE_STATUS_ITEM" />
+    <FunctionImportMapping FunctionImportName="UPDATE_TO_DO" FunctionName="ToDoModel.Store.UPDATE_TO_DO" />
+    <FunctionImportMapping FunctionImportName="DELETE_ITEM" FunctionName="ToDoModel.Store.DELETE_ITEM" />
+    <FunctionImportMapping FunctionImportName="DELETE_TO_DO" FunctionName="ToDoModel.Store.DELETE_TO_DO" />
+    <FunctionImportMapping FunctionImportName="DELETE_ITEM_TO_DO" FunctionName="ToDoModel.Store.DELETE_ITEM_TO_DO" />
+    <EntitySetMapping Name="ITEMs">
+      <EntityTypeMapping TypeName="ToDoModel.ITEM">
+        <MappingFragment StoreEntitySet="ITEM">
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="To_Do_ID" ColumnName="To_Do_ID" />
+          <ScalarProperty Name="Item_Status" ColumnName="Item_Status" />
+          <ScalarProperty Name="Item_Description" ColumnName="Item_Description" />
+          <ScalarProperty Name="Item_ID" ColumnName="Item_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TO_DO">
+      <EntityTypeMapping TypeName="ToDoModel.TO_DO">
+        <MappingFragment StoreEntitySet="TO_DO">
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Deadline" ColumnName="Deadline" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="To_Do_ID" ColumnName="To_Do_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="ADD_ITEM" FunctionName="ToDoModel.Store.ADD_ITEM" />
+    <FunctionImportMapping FunctionImportName="ADD_TO_DO" FunctionName="ToDoModel.Store.ADD_TO_DO" />
+  </EntityContainerMapping>
+</Mapping>
